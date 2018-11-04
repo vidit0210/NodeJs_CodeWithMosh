@@ -26,6 +26,13 @@ app.get('/courses/:name',(req,res)=>{
 })
 
 app.post('/courses',(req,res)=>{
+
+    const schema = {
+        name:Joi.string().min(3).required() };
+    const result = Joi.validate(req.body,schema);
+    if(result.error){
+        res.status(400).send(result.error.details[0].message);
+    }
     const course = {
         id:courses.length + 1,
         name:req.body.name
@@ -56,7 +63,10 @@ app.post('/courses',(req,res)=>{
     
 // })
 
-app.put('/course/:name',(req,res)=>{
+app.put('/courses/:name',(req,res)=>{
+    console.log(courses);
+    
+
     const fcourse = courses.find(c=>c.name==req.params.name)
     if(!fcourse){
         res.status(404).send("Course Not Found");
@@ -71,6 +81,15 @@ res.send(fcourse);
 console.log(courses);
 })
 
+app.delete('/courses/:id',(req,res)=>{
+    const course = courses.find(c=>c.id==req.params.id);
+    if(!course){
+        res.status(400).send("Course Does not Exist");
+    }
+    let index = courses.indexOf(course)
+     courses.splice(index,1);
+    res.send(courses);
+})
 //Using Joi for Validation
 app.get('/post/:year/:month',(req,res)=>{
     res.send(req.params);
