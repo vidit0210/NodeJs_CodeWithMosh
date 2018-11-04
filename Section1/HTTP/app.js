@@ -1,7 +1,7 @@
 const http = require('http');
 const server = http.createServer((req,res)=>{
     if(req.url==='vidit'){
-        res.write("Hi Vidit");
+        res.write('Hi Vidit');
         res.end();
     }
 
