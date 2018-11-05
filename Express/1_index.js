@@ -1,7 +1,13 @@
 const express = require('express');
 const app = express();
 const Joi = require('joi');
+const logger  = require('./logger');
 app.use(express.json());
+
+//app.use(logger);
+
+app.use(logger.log());
+app.use(logger.auth());
 const courses =[
     {id:1,name:'C++'},
     {id:2,name:'Java'}
@@ -10,6 +16,8 @@ app.get('/',(req,res)=>{
     res.send('Hello Word');
 })
 const courseAPi= '/courses/api';
+
+
 
 app.get(courseAPi,(req,res)=>{
     res.send('This is APi Courses');
